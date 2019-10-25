@@ -6,7 +6,10 @@ tags:
 categories:
 - [Django]
 ---
-#### 常用，命令
+Docs
+----------
+
+### 常用，命令
 
     新建一个项目：
     开启服务器： py manage.py runserver
