@@ -6,9 +6,11 @@ tags:
 ---
 ### what is Docker
 
-    Docker是一款针对程序开发人员和系统管理员来开发、部署、运行应用的一款虚拟化平台。
-    Docker 可以让你像使用集装箱一样快速的组合成应用，并且可以像运输标准集装箱一样，
-    尽可能的屏蔽代码层面的差异。Docker 会尽可能的缩短从代码测试到产品部署的时间。
+```reStructuredText
+Docker是一款针对程序开发人员和系统管理员来开发、部署、运行应用的一款虚拟化平台。
+Docker 可以让你像使用集装箱一样快速的组合成应用，并且可以像运输标准集装箱一样，
+尽可能的屏蔽代码层面的差异。Docker 会尽可能的缩短从代码测试到产品部署的时间。
+```
 
 
 docker是一种虚拟机技术,于传统的虚拟机技术,不同docker是直接使用宿主的的内核,他没有对硬件进行
@@ -68,7 +70,7 @@ docker可以直接使用`pip`进行安装
 #### 守护式容器
 
     sudo docker run -dit --name=ubuntu1 ubuntu cmd
-
+    
     * -i 表示以《交互模式》运行容器。
     * -t 表示容器启动后会进入其命令行。加入这两个参数后，容器创建就能登录进去。即分配一个伪终端
     * --name 为创建的容器命名。
@@ -92,7 +94,7 @@ docker logs -f bf08b7
 直接可以使用 pip安装
 
     sudo pip install -U docker-compose
-
+    
     $ curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose
 
 ### 将容器做成镜像
