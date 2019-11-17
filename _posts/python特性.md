@@ -9,11 +9,13 @@ categories:
 
 python的所有变量都可以理解是内存中一个对象的“引用”,类型是属于对象的，而不是变量。对象有两种，“可更改与不可更改。在python中，string,tuples,和numbers是不可更改的对象，而list，dict，set等则是可以修改的对象。
 #### python的标准数据类型
-    numbers(int long float complex)
-    string
-    List
-    Tuple
-    Dictionary
+```python
+numbers(int long float complex)
+string
+List
+Tuple
+Dictionary
+```
 ##### string
    重点是对string的切片
 
@@ -23,14 +25,16 @@ python的所有变量都可以理解是内存中一个对象的“引用”,类�
 ##### list
 可以存放更多的数据类型，切片方式和string类似
 
-    list = [ 'runoob', 786 , 2.23, 'john', 70.2 ]
-    tinylist = [123, 'john']
-    print list               # 输出完整列表
-    print list[0]            # 输出列表的第一个元素
-    print list[1:3]          # 输出第二个至第三个元素
-    print list[2:]           # 输出从第三个开始至列表末尾的所有元素
-    print tinylist * 2       # 输出列表两次
-    print list + tinylist    # 打印组合的列表
+```python
+list = [ 'runoob', 786 , 2.23, 'john', 70.2 ]
+tinylist = [123, 'john']
+print list               # 输出完整列表
+print list[0]            # 输出列表的第一个元素
+print list[1:3]          # 输出第二个至第三个元素
+print list[2:]           # 输出从第三个开始至列表末尾的所有元素
+print tinylist * 2       # 输出列表两次
+print list + tinylist    # 打印组合的列表
+```
 #### python元类（metaclass)
 用于orm的单例模式，对数据库对象实现保护，确保全局只有一个数据库对象
 metaclass，直译为元类，简单的解释就是：
@@ -43,17 +47,19 @@ metaclass，直译为元类，简单的解释就是：
 #### @staticmethod，和@classmethod
 python有三种方法即静态方法(staticmethod)，类方法(classmethod)和实例方法
 
-    def foo(x):
-    print("executing foo(%s)"%(1))
-    class A(object):
-        def foo(self,x):
-            print("executing foo(%s,%s)"%(self,x))
-        @classmethod
-        def class_foo(cls,x):
-            print("executing class_foo(%s,%s)"%(cls,x))
-        @staticmethod
-        def static_foo(x):
-            print("executing static_foo(%s)"%x)
+```python
+def foo(x):
+print("executing foo(%s)"%(1))
+class A(object):
+    def foo(self,x):
+        print("executing foo(%s,%s)"%(self,x))
+    @classmethod
+    def class_foo(cls,x):
+        print("executing class_foo(%s,%s)"%(cls,x))
+    @staticmethod
+    def static_foo(x):
+        print("executing static_foo(%s)"%x)
+```
 
 #### 类变量和实例变量
 ##### 类变量：
@@ -79,21 +85,25 @@ __foo:解释器用_classname__foo来代替这个名字，以区别和其他类�
 #### *args and **kwargs
 当你不确定你的函数里将要传递多少参数时你可以用*args，它可以传递任意数量的参数
 
-         def print_everything(*args):
-            for count, thing in enumerate(args):
-                     print '{0}. {1}'.format(count, thing)
-        print_everything('apple', 'banana', 'cabbage')
-        0. apple
-        1. banana
-        2. cabbage
+```python
+     def print_everything(*args):
+        for count, thing in enumerate(args):
+                 print '{0}. {1}'.format(count, thing)
+    print_everything('apple', 'banana', 'cabbage')
+    0. apple
+    1. banana
+    2. cabbage
+```
 **kwargs允许你使用没有事先定义的参数名：
 
-         def print_everything(**kwargs):
-            for count, thing in kwargs(args):
-                     print '{0}. {1}'.format(count, thing)
-        print_everything(apple = 'fruit', cabbage = 'vegetable')
-        cabbage = vegetable
-        apple = fruit
+```python
+     def print_everything(**kwargs):
+        for count, thing in kwargs(args):
+                 print '{0}. {1}'.format(count, thing)
+    print_everything(apple = 'fruit', cabbage = 'vegetable')
+    cabbage = vegetable
+    apple = fruit
+```
 也可以混合使用，在使用时*args 和**kwargs必须是有顺序的
 #### 鸭子类型
 #### python中的重载

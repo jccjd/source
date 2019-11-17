@@ -32,43 +32,47 @@ WSGI。
 
 **其中两个参数是必须的 `environ`, `start_response`**
 
-    class WSGIHandler(base.BaseHandler):
-        request_class = WSGIRequest
+```python
+class WSGIHandler(base.BaseHandler):
+    request_class = WSGIRequest
 
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            self.load_middleware()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.load_middleware()
 
-        def __call__(self, environ, start_response):
-            set_script_prefix(get_script_name(environ))
-            signals.request_started.send(sender=self.__class__, environ=environ)
-            request = self.request_class(environ)
-            response = self.get_response(request)
+    def __call__(self, environ, start_response):
+        set_script_prefix(get_script_name(environ))
+        signals.request_started.send(sender=self.__class__, environ=environ)
+        request = self.request_class(environ)
+        response = self.get_response(request)
 
-            response._handler_class = self.__class__
+        response._handler_class = self.__class__
 
-            status = '%d %s' % (response.status_code, response.reason_phrase)
-            response_headers = list(response.items())
-            for c in response.cookies.values():
-                response_headers.append(('Set-Cookie', c.output(header='')))
-            start_response(status, response_headers)
-            if getattr(response, 'file_to_stream', None) is not None and environ.get('wsgi.file_wrapper'):
-                response = environ['wsgi.file_wrapper'](response.file_to_stream)
-            return response
+        status = '%d %s' % (response.status_code, response.reason_phrase)
+        response_headers = list(response.items())
+        for c in response.cookies.values():
+            response_headers.append(('Set-Cookie', c.output(header='')))
+        start_response(status, response_headers)
+        if getattr(response, 'file_to_stream', None) is not None and environ.get('wsgi.file_wrapper'):
+            response = environ['wsgi.file_wrapper'](response.file_to_stream)
+        return response
+```
 
 #### WSGI应用端   
 application 端的协议就是这样的，这个api只需要两个参数，可以看到是非
 常简单的，上面是框架中的东西，`PEP 333`,中给出了一个更简单的 事例，下面
 对该事例进行了修改
 
-    def simple_app(environ, start_response):
-        stdout = "Hello world!"
-        h = sorted(environ.items())
-        for k,v in h:
-            stdout += k + '=' + repr(v) + "\r\n"
-        print(start_response)
-        start_response("200 OK", [('Content-Type','text/plain; charset=utf-8')])
-        return [stdout.encode("utf-8")]
+```python
+def simple_app(environ, start_response):
+    stdout = "Hello world!"
+    h = sorted(environ.items())
+    for k,v in h:
+        stdout += k + '=' + repr(v) + "\r\n"
+    print(start_response)
+    start_response("200 OK", [('Content-Type','text/plain; charset=utf-8')])
+    return [stdout.encode("utf-8")]
+```
 
 上面的代码就算一个满足WSGI的Web应用程序，只要接收两个参数即可，看起来很
 像是API，其实它的确可以是当作API来用的但是这是给框架开发者使用的，
@@ -80,11 +84,13 @@ application 端的协议就是这样的，这个api只需要两个参数，可�
 下面通过标准库中的`wsgiref.simple_server` 来实现一个简单的服务器，开启之
 后即可，通过网页访问本地端口8000得到请求
 
-    from wsgiref.simple_server import make_server
+```python
+from wsgiref.simple_server import make_server
 
-    httpd = make_server('', 8000, simple_app)
-    print('Serving HTTP on port 8000...')
-    httpd.serve_forever()
+httpd = make_server('', 8000, simple_app)
+print('Serving HTTP on port 8000...')
+httpd.serve_forever()
+```
 
 
 当从HTTP客户端收到一个请求，服务器就调用simple_app去做逻辑处理并返回处理
@@ -101,11 +107,13 @@ application 端的协议就是这样的，这个api只需要两个参数，可�
 视图，响应，模板，和异常，层层的包裹而形成了中间件栈(middleware stack)
 
 
-        self._request_middleware = []
-        self._view_middleware = []
-        self._template_response_middleware = []
-        self._response_middleware = []
-        self._exception_middleware = []
+```python
+    self._request_middleware = []
+    self._view_middleware = []
+    self._template_response_middleware = []
+    self._response_middleware = []
+    self._exception_middleware = []
+```
 那么这些中间件在出入栈的过程中，中间件的位置就成立相对位置，对服务器他是
 应用，对于应用则他是服务.
 
